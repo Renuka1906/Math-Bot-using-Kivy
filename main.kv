@@ -1,0 +1,175 @@
+<WindowManager>:
+    MainWindow:
+        id: main
+        name: "main"
+    ChatWindow:
+        id: chat
+        name: "chat"
+
+<MainWindow>:
+
+    Image:
+        source:"chatbots.png"
+        keep_ratio : False
+    GridLayout:
+        cols: 2
+
+        GridLayout:
+            padding: 12
+            spacing: 12
+            background_color: (153/255, 63/255, 191/255, 1)
+            rows: 6
+
+            Label:
+                text: ""
+
+            Label:
+                text: "Math-Bot"
+                font_size: 55
+                bold: True
+                color: (0,0,0,1)
+
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+            GridLayout:
+                cols: 3
+                Label:
+                    text: ""
+
+                Button:
+                    background_color: (0, 60/255, 0, 1)
+                    text: "Let's Chat !!"
+                    on_press: root.manager.current = 'chat'
+                    font_size: 20
+                    bold: True
+                    background_color: (0, 0, 0, 0)
+                    height: 10
+                    canvas.before:
+                        Color:
+                            rgba: (0, 37/255, 0, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [33]
+                    color: (1, 1, 1, 1)
+
+                Label:
+                    text: ""
+
+            GridLayout:
+                cols: 1
+                rows: 2
+
+                Label:
+                    text: ""
+
+                Button:
+                    text: 'Quit'
+                    on_press: root.quit("")
+                    font_size:30
+                    bold: True
+                    italic: True
+                    height: 10
+                    background_color: (0, 0, 0, 0)
+                    canvas.before:
+                        Color:
+                            rgba:(0, 37/255, 0, 1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[0]
+
+                    border: 30,30,30,90
+                    color: (1, 1,1,1)
+
+
+<ChatWindow>:
+    name: "chat"
+    message: message
+    history: history
+
+    Image:
+        source:"backgd.png"
+        allow_stretch: True
+        keep_ratio : False
+    GridLayout:
+        cols: 1
+        rows: 3
+
+        GridLayout:
+            cols: 3
+
+            Label:
+                text: ""
+
+            Label:
+                text: "Math-Bot"
+                font_size: 40
+                bold: True
+                underline: True
+                background_color: (0, 0, 0, 0)
+                height: 10
+                color: (1, 1, 1, 1)
+
+            RelativeLayout:
+                Button:
+                    pos_hint: {'right': 1, 'top':1}
+                    text: "Go-Back"
+                    size_hint: None, None
+                    size: 100, 40
+                    on_release:
+                        app.root.current = "main"
+
+        ScrollableLabel:
+            id: history
+            height: root.size[1] * 0.7
+            size_hint_y: None
+
+        GridLayout:
+            cols: 2
+            FloatLayout:
+
+                TextInput:
+                    id: message
+                    size_hint: 0.9, 0.6
+                    pos_hint: {'x': 0, 'bottom': 1}
+                    hint_text: "Type here"
+
+                Button:
+                    background_color: 0.1, 0.5, 0.6, 1
+                    orientation: 'vertical'
+                    text: "Send"
+                    size_hint: 0.2, 0.6
+                    pos_hint: {'x': 0.8, 'bottom': 1}
+                    font_size: 20
+                    on_release: root.send_message()
+
+
+
+<ScrollableLabel>:
+    chat_hist: chat_hist
+    layout: layout
+    scroll: scroll
+    bar_width: 10
+    scroll_type: ['bars', 'content']
+
+    GridLayout:
+        id: layout
+        cols: 1
+        size_hint_y: None
+        Label:
+            id: chat_hist
+            size_hint_y: None
+            text_size: self.size
+            valign: 'top'
+            spacing: 10
+            text: "Bot: Hey! I'm Math Bot....  I can guide you through maths problems: algebra, trigonometry, graphs, shapes and probability.\n"
+            padding_x: 10
+            markup: True
+
+        Label:
+            id: scroll
